@@ -27,4 +27,12 @@ app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
 
+// Auto-apply migrations
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<AntigravityQuotes.Data.QuotesContext>();
+    context.Database.Migrate();
+}
+
 app.Run();
