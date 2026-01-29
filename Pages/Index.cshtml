@@ -38,16 +38,31 @@
                                     }
                                 </footer>
                             </blockquote>
+                            @if (!string.IsNullOrEmpty(item.Tags))
+                            {
+                                <div class="mt-2">
+                                    @foreach (var tag in item.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                                    {
+                                        <span class="badge badge-tag">@tag.Trim()</span>
+                                    }
+                                </div>
+                            }
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center text-muted small">
                             <span>@item.CreatedAt.ToLocalTime().ToString("g")</span>
-                            <button class="btn btn-sm btn-outline-secondary copy-btn" 
-                                    data-quote="@item.Text" 
-                                    data-author="@item.Author" 
-                                    data-source="@item.Source"
-                                    title="Copy to Clipboard">
-                                📋 Copy
-                            </button>
+                            <div>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary me-1" title="Edit">✏️</a>
+                                }
+                                <button class="btn btn-sm btn-outline-secondary copy-btn" 
+                                        data-quote="@item.Text" 
+                                        data-author="@item.Author" 
+                                        data-source="@item.Source"
+                                        title="Copy to Clipboard">
+                                    📋 Copy
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

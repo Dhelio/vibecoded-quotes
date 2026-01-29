@@ -28,7 +28,11 @@ public class IndexModel : PageModel
 
             if (!string.IsNullOrEmpty(SearchString))
             {
-                quotes = quotes.Where(s => s.Text.Contains(SearchString) || s.Author.Contains(SearchString));
+                quotes = quotes.Where(s => 
+                    s.Text.Contains(SearchString) || 
+                    s.Author.Contains(SearchString) ||
+                    (s.Source != null && s.Source.Contains(SearchString)) ||
+                    (s.Tags != null && s.Tags.Contains(SearchString)));
             }
 
             Quotes = await quotes
