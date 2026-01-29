@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using AntigravityQuotes.Data;
@@ -13,10 +14,6 @@ public class IndexModel : PageModel
     {
         _context = context;
     }
-
-using Microsoft.AspNetCore.Mvc;
-
-// ...
 
     [BindProperty(SupportsGet = true)]
     public string? SearchString { get; set; }
