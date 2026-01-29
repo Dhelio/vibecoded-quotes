@@ -1,0 +1,45 @@
+@page
+@model AntigravityQuotes.Pages.CreateModel
+
+@{
+    ViewData["Title"] = "Add Quote";
+}
+
+<div class="container">
+    <h1 class="mb-4">Add a New Quote</h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="mb-3">
+                    <label asp-for="Quote.Text" class="form-label">Quote Text</label>
+                    <textarea asp-for="Quote.Text" class="form-control" rows="3" required></textarea>
+                    <span asp-validation-for="Quote.Text" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Quote.Author" class="form-label">Author</label>
+                    <input asp-for="Quote.Author" class="form-control" required />
+                    <span asp-validation-for="Quote.Author" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Quote.Source" class="form-label">Source (Optional)</label>
+                    <input asp-for="Quote.Source" class="form-control" placeholder="Book, Movie, etc." />
+                    <span asp-validation-for="Quote.Source" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Save Quote</button>
+                    <a asp-page="Index" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
