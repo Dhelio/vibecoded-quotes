@@ -39,8 +39,15 @@
                                 </footer>
                             </blockquote>
                         </div>
-                        <div class="card-footer text-muted small">
-                            @item.CreatedAt.ToLocalTime().ToString("g")
+                        <div class="card-footer d-flex justify-content-between align-items-center text-muted small">
+                            <span>@item.CreatedAt.ToLocalTime().ToString("g")</span>
+                            <button class="btn btn-sm btn-outline-secondary copy-btn" 
+                                    data-quote="@item.Text" 
+                                    data-author="@item.Author" 
+                                    data-source="@item.Source"
+                                    title="Copy to Clipboard">
+                                📋 Copy
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -54,3 +61,28 @@
         </div>
     }
 </div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const quote = btn.dataset.quote;
+                const author = btn.dataset.author;
+                const source = btn.dataset.source;
+                
+                let text = `"${quote}" — ${author}`;
+                if (source) {
+                    text += `, ${source}`;
+                }
+                
+                try {
+                    await navigator.clipboard.writeText(text);
+                    btn.textContent = '✅ Copied!';
+                    setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+            });
+        });
+    </script>
+}
