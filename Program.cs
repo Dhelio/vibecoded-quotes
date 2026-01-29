@@ -7,6 +7,13 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<AntigravityQuotes.Data.QuotesContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("QuotesContext")));
 
+builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login";
+        options.LogoutPath = "/Logout";
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,6 +28,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

@@ -7,7 +7,10 @@
 <div class="container">
     <header class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="display-4">Quotes</h1>
-        <a asp-page="Create" class="btn btn-primary">Add Quote</a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-page="Create" class="btn btn-primary">Add Quote</a>
+        }
     </header>
 
     <form class="mb-4">

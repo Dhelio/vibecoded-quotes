@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using AntigravityQuotes.Data;
 using AntigravityQuotes.Models;
 
+using Microsoft.AspNetCore.Authorization;
+
 namespace AntigravityQuotes.Pages;
 
+[Authorize]
 public class CreateModel : PageModel
 {
     private readonly QuotesContext _context;
