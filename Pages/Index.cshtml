@@ -10,6 +10,13 @@
         <a asp-page="Create" class="btn btn-primary">Add Quote</a>
     </header>
 
+    <form class="mb-4">
+        <div class="input-group">
+            <input type="text" asp-for="SearchString" class="form-control" placeholder="Search by text or author..." />
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+    </form>
+
     @if (Model.Quotes != null && Model.Quotes.Any())
     {
         <div class="row">

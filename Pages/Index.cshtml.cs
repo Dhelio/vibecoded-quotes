@@ -14,13 +14,27 @@ public class IndexModel : PageModel
         _context = context;
     }
 
+using Microsoft.AspNetCore.Mvc;
+
+// ...
+
+    [BindProperty(SupportsGet = true)]
+    public string? SearchString { get; set; }
+
     public IList<Quote> Quotes { get;set; } = default!;
 
     public async Task OnGetAsync()
     {
         if (_context.Quotes != null)
         {
-            Quotes = await _context.Quotes
+            var quotes = _context.Quotes.AsQueryable();
+
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                quotes = quotes.Where(s => s.Text.Contains(SearchString) || s.Author.Contains(SearchString));
+            }
+
+            Quotes = await quotes
                 .OrderByDescending(q => q.CreatedAt)
                 .ToListAsync();
         }
