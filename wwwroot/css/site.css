@@ -150,12 +150,27 @@ h6 {
     color: var(--text-muted);
 }
 
-/* Tags */
+/* Tags - Dynamic colors based on tag name */
 .badge-tag {
-    background-color: var(--secondary-color);
-    color: var(--text-color);
+    --tag-hue: 200;
+    background: linear-gradient(135deg,
+            hsl(var(--tag-hue), 70%, 35%),
+            hsl(var(--tag-hue), 60%, 25%));
+    color: hsl(var(--tag-hue), 30%, 90%);
     font-size: 0.75rem;
     margin-right: 0.25rem;
+    padding: 0.35em 0.65em;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-transform: lowercase;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    border: 1px solid hsl(var(--tag-hue), 50%, 45%);
+}
+
+.badge-tag:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px hsla(var(--tag-hue), 70%, 40%, 0.4);
 }
 
 .btn:focus,

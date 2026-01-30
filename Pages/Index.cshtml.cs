@@ -28,11 +28,23 @@ public class IndexModel : PageModel
 
             if (!string.IsNullOrEmpty(SearchString))
             {
-                quotes = quotes.Where(s => 
-                    s.Text.Contains(SearchString) || 
-                    s.Author.Contains(SearchString) ||
-                    (s.Source != null && s.Source.Contains(SearchString)) ||
-                    (s.Tags != null && s.Tags.Contains(SearchString)));
+                // Check if searching by tag with "tag:" prefix
+                if (SearchString.StartsWith("tag:", StringComparison.OrdinalIgnoreCase))
+                {
+                    var tagSearch = SearchString.Substring(4).Trim();
+                    if (!string.IsNullOrEmpty(tagSearch))
+                    {
+                        quotes = quotes.Where(s => s.Tags != null && s.Tags.Contains(tagSearch));
+                    }
+                }
+                else
+                {
+                    quotes = quotes.Where(s => 
+                        s.Text.Contains(SearchString) || 
+                        s.Author.Contains(SearchString) ||
+                        (s.Source != null && s.Source.Contains(SearchString)) ||
+                        (s.Tags != null && s.Tags.Contains(SearchString)));
+                }
             }
 
             Quotes = await quotes

@@ -15,7 +15,7 @@
 
     <form class="mb-4">
         <div class="input-group">
-            <input type="text" asp-for="SearchString" class="form-control" placeholder="Search by text or author..." />
+            <input type="text" asp-for="SearchString" class="form-control" placeholder="Search... (use 'tag: name' for tags)" />
             <button class="btn btn-outline-secondary" type="submit">Search</button>
         </div>
     </form>
@@ -43,7 +43,11 @@
                                 <div class="mt-2">
                                     @foreach (var tag in item.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
                                     {
-                                        <span class="badge badge-tag">@tag.Trim()</span>
+                                        var tagName = tag.Trim().ToLower();
+                                        var tagHue = Math.Abs(tagName.GetHashCode()) % 360;
+                                        <a href="?SearchString=tag:+@tagName" 
+                                           class="badge badge-tag text-decoration-none" 
+                                           style="--tag-hue: @tagHue;">@tagName</a>
                                     }
                                 </div>
                             }

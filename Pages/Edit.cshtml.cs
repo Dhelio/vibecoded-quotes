@@ -43,7 +43,17 @@ public class EditModel : PageModel
             return Page();
         }
 
-        _context.Attach(Quote).State = EntityState.Modified;
+        var existingQuote = await _context.Quotes.FindAsync(Quote.Id);
+        if (existingQuote == null)
+        {
+            return NotFound();
+        }
+
+        // Update fields individually
+        existingQuote.Text = Quote.Text;
+        existingQuote.Author = Quote.Author;
+        existingQuote.Source = Quote.Source;
+        existingQuote.Tags = Quote.Tags;
 
         try
         {
